@@ -54,12 +54,21 @@ return array(
             ),
         ),
     ),
+    'navigation' => array(
+        'default' => array(
+            'home' => array(
+                'label' => 'Home',
+                'route' => 'home',
+            )
+        ),
+    ),
     'service_manager' => array(
         'abstract_factories' => array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
             'Zend\Log\LoggerAbstractServiceFactory',
         ),
         'factories' => array(
+            'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
         ),
     ),
