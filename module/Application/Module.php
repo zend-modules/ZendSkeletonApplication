@@ -11,14 +11,18 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Application\Listener\SendResponseListener;
 
 class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
-        $eventManager        = $e->getApplication()->getEventManager();
-        $moduleRouteListener = new ModuleRouteListener();
+        $eventManager         = $e->getApplication()->getEventManager();
+        $moduleRouteListener  = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        $sendResponseListener = new SendResponseListener();
+        $sendResponseListener->attach($eventManager);
     }
 
     public function getConfig()
