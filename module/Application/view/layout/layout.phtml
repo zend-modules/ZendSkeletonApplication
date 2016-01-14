@@ -45,11 +45,13 @@
         </nav>
         <div class="container">
             <?php echo $this->content; ?>
-            <hr>
-            <footer>
-                <p>&copy; 2005 - <?php echo date('Y') ?> by Zend Technologies Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
-            </footer>
         </div> <!-- /container -->
+        <footer>
+            <div class="container">
+                <hr />
+                <p>&copy; 2005 - <?php echo date('Y') ?> by Zend Technologies Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
+            </div>
+        </footer>
         <?php echo $this->inlineScript()
                         ->prependFile($this->basePath('js/bootstrap.min.js'))
                         ->prependFile($this->basePath('js/jquery.min.js'));
