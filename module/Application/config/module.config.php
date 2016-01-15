@@ -32,6 +32,16 @@ return array(
                     ),
                 ),
             ),
+            'contact' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/contact-us.html',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Contact',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
@@ -75,7 +85,12 @@ return array(
                 'label' => 'About Us',
                 'route' => 'about',
                 'order' => 600,
-            )
+            ),
+            'contact' => array(
+                'label' => 'Contact Us',
+                'route' => 'contact',
+                'order' => 999,
+            ),
         ),
     ),
     'service_manager' => array(
@@ -100,8 +115,9 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\About' => Controller\AboutController::class,
-            'Application\Controller\Index' => Controller\IndexController::class
+            'Application\Controller\About'   => Controller\AboutController::class,
+            'Application\Controller\Contact' => Controller\ContactController::class,
+            'Application\Controller\Index'   => Controller\IndexController::class
         ),
     ),
     'view_manager' => array(
