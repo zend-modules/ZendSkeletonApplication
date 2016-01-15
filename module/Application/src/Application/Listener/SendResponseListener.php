@@ -45,6 +45,48 @@ class SendResponseListener extends AbstractListenerAggregate
         return $locale;
     }
 
+    protected function setViewHelpers(ServiceLocatorInterface $services)
+    {
+        // Wee need a ViewHelperManager
+        if (!$services->has('ViewHelperManager')) {
+            return;
+        }
+
+        $viewHelperManager = $services->get('ViewHelperManager');
+        if (!$viewHelperManager instanceof ViewHelperPluginManager) {
+            return;
+        }
+
+        // htmlTag view helper
+        if ( $viewHelperManager->has('htmlTag') ) {
+            $htmlTag = $viewHelperManager->get('htmlTag');
+
+            // Schema
+            $attributes = $htmlTag->getAttributes();
+
+            if ( !isset($attributes['itemscope']) ) {
+                $htmlTag->setAttribute('itemscope', '');
+            }
+
+            if ( !isset($attributes['itemtype']) ) {
+                $htmlTag->setAttribute('itemtype', 'http://schema.org/WebPage');
+            }
+
+            // Language
+            $locale   = $this->getLocale($services);
+            if ($locale !== null) {
+                if (extension_loaded('intl')) {
+                    $htmlTag->setAttribute('lang', \Locale::getPrimaryLanguage($locale));
+                } else {
+                    $lang = preg_replace('/\-/', '_', $locale);
+                    $lang = explode('_', $lang, 2);
+                    $lang = $lang[0];
+                    $htmlTag->setAttribute('lang', $lang);
+                }
+            }
+        }
+    }
+
     /**
      * Listen to the "finish" event and attempt to inject the HTTP headers.
      * 
@@ -80,26 +122,7 @@ class SendResponseListener extends AbstractListenerAggregate
         }
 
         $services = $event->getApplication()->getServiceManager();
-        $locale   = $this->getLocale($services);
-        if ($locale !== null) {
-            // HTML TAG view helper
-            if ($services->has('ViewHelperManager')) {
-                $viewHelperManager = $services->get('ViewHelperManager');
-                if ($viewHelperManager instanceof ViewHelperPluginManager) {
-                    // HtmlTag
-                    if ( $viewHelperManager->has('htmlTag') ) {
-                        $htmlTag = $viewHelperManager->get('htmlTag');
-                        if (extension_loaded('intl')) {
-                            $htmlTag->setAttribute('lang', \Locale::getPrimaryLanguage($locale));
-                        } else {
-                            $lang = preg_replace('/\-/', '_', $locale);
-                            $lang = explode('_', $lang, 2);
-                            $lang = $lang[0];
-                            $htmlTag->setAttribute('lang', $lang);
-                        }
-                    }
-                }
-            }
-        }
+
+        $this->setViewHelpers($services);
     }
 }
