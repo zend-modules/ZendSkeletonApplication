@@ -9,20 +9,34 @@
 
 namespace Application;
 
+use Application\Listener\SendResponseListener;
+use Zend\I18n\Translator\TranslatorAwareInterface;
+use Zend\I18n\Translator\TranslatorInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-use Application\Listener\SendResponseListener;
+
 
 class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
         $eventManager         = $e->getApplication()->getEventManager();
+        $serviceManager       = $e->getApplication()->getServiceManager();
+
         $moduleRouteListener  = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
         $sendResponseListener = new SendResponseListener();
         $sendResponseListener->attach($eventManager);
+
+        if ($serviceManager->has('Translator') && ($e->getRouter() instanceof TranslatorAwareInterface)) {
+            $translator = $serviceManager->get('Translator');
+
+            if ($translator instanceof TranslatorInterface) {
+                $e->getRouter()->setTranslator( $translator );
+                $e->getRouter()->setTranslatorTextDomain('Zend\Mvc\Router');
+            }
+        }
     }
 
     public function getConfig()

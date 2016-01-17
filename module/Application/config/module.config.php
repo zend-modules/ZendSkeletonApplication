@@ -11,6 +11,7 @@ namespace Application;
 
 return array(
     'router' => array(
+        'router_class' => 'Zend\Mvc\Router\Http\TranslatorAwareTreeRouteStack',
         'routes' => array(
             'home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
@@ -25,7 +26,7 @@ return array(
             'about' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route'    => '/about-us.html',
+                    'route'    => '/{about-us}.html',
                     'defaults' => array(
                         'controller' => 'Application\Controller\About',
                         'action'     => 'index',
@@ -35,7 +36,7 @@ return array(
             'contact' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route'    => '/contact-us.html',
+                    'route'    => '/{contact-us}.html',
                     'defaults' => array(
                         'controller' => 'Application\Controller\Contact',
                         'action'     => 'index',
@@ -110,6 +111,12 @@ return array(
                 'type'     => 'gettext',
                 'base_dir' => __DIR__ . '/../language',
                 'pattern'  => '%s.mo',
+            ),
+            array(
+                'type'        => 'gettext',
+                'base_dir'    => __DIR__ . '/../language/route',
+                'pattern'     => '%s.mo',
+                'text_domain' => 'Zend\Mvc\Router'
             ),
         ),
     ),
