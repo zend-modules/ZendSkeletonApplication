@@ -26,9 +26,6 @@ class Module
         $moduleRouteListener  = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
-        $sendResponseListener = new SendResponseListener();
-        $sendResponseListener->attach($eventManager);
-
         if ($serviceManager->has('Translator') && ($e->getRouter() instanceof TranslatorAwareInterface)) {
             $translator = $serviceManager->get('Translator');
 

@@ -65,7 +65,18 @@ return array(
     //     ),
     // ),
 
-   // Initial configuration with which to seed the ServiceManager.
-   // Should be compatible with Zend\ServiceManager\Config.
-   // 'service_manager' => array(),
+    // Initial configuration with which to seed the ServiceManager.
+    // Should be compatible with Zend\ServiceManager\Config.
+    // 'service_manager' => array(),
+	'service_manager' => array(
+	    'factories' => array(
+		    'LocaleManager' => 'LocaleManager\Service\LocaleManagerFactory',
+		),
+        'invokables' => array(
+            'LocaleManager\Listener\Bootstrap' => 'LocaleManager\Listener\BootstrapListener',
+        ),
+    ),
+    'listeners' => array(
+        'LocaleManager\Listener\Bootstrap',
+    ),
 );

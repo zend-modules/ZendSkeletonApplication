@@ -10,6 +10,7 @@
     "require": {
         "php": ">=5.5",
         "zendframework/zendframework": "~2.5",
-        "zend-modules/bootstrap": "dev-master"
+        "zend-modules/bootstrap": "dev-master",
+		"zend-modules/localemanager": "dev-master"
     }
 }
