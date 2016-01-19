@@ -25,16 +25,6 @@ class Module
         $moduleRouteListener  = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
-        // Disable html attribute escaper as it ruins my SEO
-        $viewHelperManager = $serviceManager->get('ViewHelperManager');
-        if ($viewHelperManager instanceof \Zend\View\HelperPluginManager) {
-        	if ($viewHelperManager->has('escapehtmlattr')) {
-        	    $viewHelperManager->setAllowOverride(true);
-        	    $viewHelperManager->setInvokableClass('escapehtmlattr', 'Application\View\Helper\EscapeHtmlAttr');
-        	    $viewHelperManager->setAllowOverride(false);
-        	}
-        }
-
 		$serviceManager->get('LocaleManager')->setLocale('es_ES');
         if ($serviceManager->has('Translator') && ($e->getRouter() instanceof TranslatorAwareInterface)) {
             $translator = $serviceManager->get('Translator');
