@@ -74,9 +74,11 @@ return array(
 		),
         'invokables' => array(
             'LocaleManager\Listener\Bootstrap' => 'LocaleManager\Listener\BootstrapListener',
+			'Seo\Listener\Bootstrap' => 'Seo\Listener\BootstrapListener',
         ),
     ),
     'listeners' => array(
         'LocaleManager\Listener\Bootstrap',
+		'Seo\Listener\Bootstrap',
     ),
 );
